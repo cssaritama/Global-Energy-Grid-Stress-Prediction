@@ -1,4 +1,4 @@
-# Global Energy Grid Stress & Resilience Prediction (Capstone 1)
+# Global Energy Grid Stress & Resilience Prediction
 
 Global Energy Grid Stress & Resilience Prediction is a production-ready machine
 learning system designed to anticipate periods of high operational stress in
