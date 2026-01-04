@@ -1,41 +1,52 @@
-# Global Energy Grid Stress & Resilience Prediction 
+# Global Energy Grid Stress & Resilience Prediction (Capstone 1)
 
 Global Energy Grid Stress & Resilience Prediction is a production-ready machine
 learning system designed to anticipate periods of high operational stress in
-electricity grids.
+electricity grids using historical operational data.
 
-By analyzing historical power system signals  including electricity demand patterns, renewable energy penetration, and volatility indicators the model identifies conditions that may lead to grid instability, supply shortages, or service disruptions.
-
-This project is suitable for real-world deployment, decision support, and
-integration into energy analytics pipelines.
+The project is designed for real-world usage, operational decision support, and
+deployment in modern cloud environments.
 
 ---
 
-## 1. Why This Project Matters
+## 1. Problem Description
 
-Electricity grids are critical infrastructure. Increasing electrification, climate-driven demand spikes, and the rapid integration of intermittent renewable energy sources are placing unprecedented pressure on power systems worldwide.
+Electricity grids are critical infrastructure systems. In recent years, increasing
+electrification, climate-driven demand peaks, and the rapid integration of intermittent
+renewable energy sources have significantly increased operational stress on power grids
+worldwide.
 
-Early identification of grid stress risk enables:
+Periods of high grid stress can lead to:
+- Supply shortages and service disruptions
+- Increased risk of blackouts
+- Higher operational and balancing costs
+- Reduced system resilience during extreme events
 
-- Proactive grid management and load balancing  
-- Improved resilience against blackouts and extreme events  
-- Safer and more reliable renewable energy integration  
-- Reduced operational and economic risk  
+**Objective**
+
+The objective of this project is to build a machine learning model capable of predicting
+whether an electricity grid is operating under high stress risk, based on historical
+signals such as demand intensity, renewable energy penetration, variability, and system
+margin indicators.
+
+The solution is exposed as a RESTful API and can be integrated into:
+- Grid operation monitoring systems
+- Energy analytics platforms
+- Infrastructure resilience dashboards
 
 ---
 
-## 2. Real-World Impact and Applications
+## 2. Why This Project Matters
 
-This system can be used by:
+Early identification of grid stress enables:
 
-- Electricity grid operators and utilities  
-- Energy regulators and policy makers  
-- Infrastructure and resilience planners  
-- Energy analytics, consulting, and forecasting teams  
+- Proactive grid management and preventive actions  
+- Safer integration of renewable energy sources  
+- Improved resilience against extreme weather events  
+- Reduction of economic and operational risks  
 
-From a commercial perspective, similar predictive systems are already deployed as
-decision-support tools, enabling cost reduction, reliability improvements, and
-data-driven planning in modern energy systems.
+This type of predictive system aligns closely with real-world tools currently used by
+utilities, energy regulators, and infrastructure planners.
 
 ---
 
@@ -46,14 +57,14 @@ data-driven planning in modern energy systems.
 - `0` → Normal grid operation  
 - `1` → High grid stress risk  
 
-The trained model is exposed via a REST API and can be deployed locally or in the cloud.
+The trained model produces a probability score and is accessible via a web API.
 
 ---
 
 ## 4. Dataset
 
 The project uses the **Open Power System Data (OPSD) – Time Series** dataset, which
-provides hourly electricity load and renewable generation data for multiple European
+contains hourly electricity load and renewable generation data for multiple European
 countries.
 
 - Source: https://data.open-power-system-data.org/time_series/
@@ -61,7 +72,7 @@ countries.
 
 ### Data Reproducibility
 
-The raw dataset is large and is not committed to the repository.
+The raw dataset is large and is therefore not committed to the repository.
 
 A fully automated data pipeline is provided. Running:
 
@@ -69,7 +80,7 @@ A fully automated data pipeline is provided. Running:
 python src/download_data.py
 ```
 
-will download the raw data and generate the processed dataset required for training and
+downloads the raw data and generates the processed dataset required for training and
 evaluation:
 
 - `data/raw/time_series_60min_singleindex.csv`
@@ -106,34 +117,12 @@ evaluation:
 
 ## 6. Local Setup
 
-### Create virtual environment
-
 ```bash
 python -m venv venv
 source venv/bin/activate
-```
-
-### Install dependencies
-
-```bash
 pip install -r requirements.txt
-```
-
-### Build dataset
-
-```bash
 python src/download_data.py
-```
-
-### Train the model
-
-```bash
 python src/train.py
-```
-
-### Run the prediction service
-
-```bash
 python src/predict.py
 ```
 
@@ -168,15 +157,8 @@ Example response:
 
 ## 8. Docker
 
-### Build image
-
 ```bash
 docker build -t energy-grid-stress .
-```
-
-### Run container
-
-```bash
 docker run -p 9696:9696 energy-grid-stress
 ```
 
@@ -190,9 +172,6 @@ commands and configuration are provided in:
 ```
 deploy/cloudrun.md
 ```
-
-The deployed service exposes the same REST API interface and can be consumed by
-external systems, dashboards, or monitoring tools.
 
 ---
 
