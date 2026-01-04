@@ -1,66 +1,83 @@
-# Global Energy Grid Stress & Resilience Prediction (Capstone 1)
+# Global Energy Grid Stress & Resilience Prediction 
 
-A production-style machine learning service that predicts **high grid stress risk**
-from historical power system signals (electricity demand, renewable penetration,
-and volatility indicators).
+Global Energy Grid Stress & Resilience Prediction is a production-ready machine
+learning system designed to anticipate periods of high operational stress in
+electricity grids.
 
-This project was developed as **Capstone 1** for the **Machine Learning Zoomcamp**
-and follows the official evaluation criteria: problem description, extensive EDA,
-multiple models with tuning, reproducibility, deployment, dependency management,
-containerization, and cloud deployment.
+By analyzing historical power system signals  including electricity demand patterns, renewable energy penetration, and volatility indicators the model identifies conditions that may lead to grid instability, supply shortages, or service disruptions.
+
+This project is suitable for real-world deployment, decision support, and
+integration into energy analytics pipelines.
 
 ---
 
-## 1. Problem Description
+## 1. Why This Project Matters
 
-Modern electricity grids face increasing operational stress due to:
-- rising electricity demand and electrification,
-- extreme weather events and climate variability,
-- higher shares of intermittent renewable energy (wind and solar).
+Electricity grids are critical infrastructure. Increasing electrification, climate-driven demand spikes, and the rapid integration of intermittent renewable energy sources are placing unprecedented pressure on power systems worldwide.
 
-Grid stress can lead to supply shortages, price spikes, or blackouts, affecting
-critical infrastructure such as hospitals and transportation systems.
+Early identification of grid stress risk enables:
 
-**Goal:** predict whether a power grid is under **high stress risk** given recent
-load patterns, renewable penetration, and system margin indicators.
+- Proactive grid management and load balancing  
+- Improved resilience against blackouts and extreme events  
+- Safer and more reliable renewable energy integration  
+- Reduced operational and economic risk  
 
-**Machine Learning Task:** Binary classification  
-- `0` → Normal operation  
+---
+
+## 2. Real-World Impact and Applications
+
+This system can be used by:
+
+- Electricity grid operators and utilities  
+- Energy regulators and policy makers  
+- Infrastructure and resilience planners  
+- Energy analytics, consulting, and forecasting teams  
+
+From a commercial perspective, similar predictive systems are already deployed as
+decision-support tools, enabling cost reduction, reliability improvements, and
+data-driven planning in modern energy systems.
+
+---
+
+## 3. Machine Learning Task
+
+**Binary classification**
+
+- `0` → Normal grid operation  
 - `1` → High grid stress risk  
 
 The trained model is exposed via a REST API and can be deployed locally or in the cloud.
 
 ---
 
-## 2. Dataset
+## 4. Dataset
 
-This project uses the **Open Power System Data (OPSD) – Time Series** dataset, which
-provides hourly electricity load and generation data for multiple European countries.
+The project uses the **Open Power System Data (OPSD) – Time Series** dataset, which
+provides hourly electricity load and renewable generation data for multiple European
+countries.
 
 - Source: https://data.open-power-system-data.org/time_series/
-- Data type: real, public, reproducible
+- Data type: public, authoritative, reproducible
 
-### Data Reproducibility Note
+### Data Reproducibility
 
-The `data/` directory is intentionally empty when cloning the repository.
+The raw dataset is large and is not committed to the repository.
 
-The raw dataset used in this project is large and therefore not committed to Git.
-To ensure full reproducibility, the project includes an automated data pipeline.
-
-Running the following command will download the raw data and generate the processed
-dataset required for training and evaluation:
+A fully automated data pipeline is provided. Running:
 
 ```bash
 python src/download_data.py
 ```
 
-This will create:
+will download the raw data and generate the processed dataset required for training and
+evaluation:
+
 - `data/raw/time_series_60min_singleindex.csv`
 - `data/processed/energy_grid_daily.csv`
 
 ---
 
-## 3. Repository Structure
+## 5. Repository Structure
 
 ```
 .
@@ -69,8 +86,8 @@ This will create:
 ├── Dockerfile
 ├── Makefile
 ├── data/
-│   ├── raw/           # generated automatically
-│   └── processed/     # generated automatically
+│   ├── raw/
+│   └── processed/
 ├── notebooks/
 │   └── notebook.ipynb
 ├── src/
@@ -87,35 +104,34 @@ This will create:
 
 ---
 
-## 4. Setup (Local)
+## 6. Local Setup
 
-### 4.1 Create a virtual environment
+### Create virtual environment
 
 ```bash
 python -m venv venv
-source venv/bin/activate  # Linux / macOS
-# .\venv\Scripts\Activate.ps1  # Windows
+source venv/bin/activate
 ```
 
-### 4.2 Install dependencies
+### Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4.3 Download data and build dataset
+### Build dataset
 
 ```bash
 python src/download_data.py
 ```
 
-### 4.4 Train the model
+### Train the model
 
 ```bash
 python src/train.py
 ```
 
-### 4.5 Run the prediction service
+### Run the prediction service
 
 ```bash
 python src/predict.py
@@ -129,7 +145,7 @@ http://localhost:9696/predict
 
 ---
 
-## 5. Example Request
+## 7. Example API Request
 
 ```bash
 curl -X POST http://localhost:9696/predict   -H "Content-Type: application/json"   -d '{
@@ -150,7 +166,7 @@ Example response:
 
 ---
 
-## 6. Docker
+## 8. Docker
 
 ### Build image
 
@@ -166,56 +182,21 @@ docker run -p 9696:9696 energy-grid-stress
 
 ---
 
-## 7. Cloud Deployment (Google Cloud Run)
+## 9. Cloud Deployment
 
-Step-by-step instructions are provided in:
+The service is designed for deployment on Google Cloud Run. Complete deployment
+commands and configuration are provided in:
 
 ```
 deploy/cloudrun.md
 ```
 
-### Cloud Deployment Proof
-
-After deploying the service to Cloud Run, include **one screenshot** in the repository
-showing a successful request to the deployed endpoint.
-
-Recommended screenshot:
-- Terminal with a `curl` request to the Cloud Run service URL
-- JSON response from `/predict`
-
-Example (to be executed after deployment):
-
-```bash
-curl -X POST https://YOUR-SERVICE-URL.a.run.app/predict   -H "Content-Type: application/json"   -d '{
-    "country": "DE",
-    "demand_peak_ratio": 1.12,
-    "renewable_share": 0.38,
-    "renewable_volatility": 0.09,
-    "load_growth_rate": 0.015,
-    "capacity_margin": 0.17
-  }'
-```
-
-Save the screenshot as:
-
-```
-deploy/cloud_run_test.png
-```
-
-and reference it here to ensure full points for cloud deployment.
-
----
-
-## 8. Notes
-
-- The notebook (`notebooks/notebook.ipynb`) contains full data preparation,
-  extensive EDA, feature importance analysis, and model comparison.
-- Training logic is exported to `src/train.py`.
-- The service is containerized and production-ready.
+The deployed service exposes the same REST API interface and can be consumed by
+external systems, dashboards, or monitoring tools.
 
 ---
 
 ## License & Attribution
 
-OPSD Time Series data is provided by Open Power System Data and should be cited
+Open Power System Data (OPSD) is provided by the OPSD project and should be cited
 according to their terms.
