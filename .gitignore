@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.env
+.ipynb_checkpoints/
+
+# Data (raw files can be large)
+data/raw/*.csv
+data/raw/*.zip
+
+# Optional: local artifacts
+*.log
+.DS_Store
