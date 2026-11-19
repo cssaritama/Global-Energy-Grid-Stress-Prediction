@@ -1,5 +1,7 @@
 # Global Energy Grid Stress & Resilience Prediction
 
+> **Status:** Machine learning project. Last updated January 2026. Not actively maintained.
+
 Global Energy Grid Stress & Resilience Prediction is a production-ready machine
 learning system designed to anticipate periods of high operational stress in
 electricity grids using historical operational data.
